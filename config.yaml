@@ -1,0 +1,29 @@
+server: 
+ listen: 8080
+ workers: 4
+
+ upstreams: 
+  - id: todos
+    url: jsonplaceholder.typicode.com
+
+  - id: comments
+    url: jsonplaceholder.typicode.com
+
+  - id: posts
+    url: jsonplaceholder.typicode.com
+
+ headers:
+  - key: x-forward-for
+    value: '$ip'
+
+  - key: Authorization
+    value: 'bearer xyz'
+
+ rules: 
+  - path: /todos
+    upstreams:
+     - todos
+  - path: /posts
+    upstreams:
+    - posts
+     
